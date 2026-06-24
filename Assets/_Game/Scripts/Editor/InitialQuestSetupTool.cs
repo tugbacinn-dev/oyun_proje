@@ -114,7 +114,7 @@ namespace PatininIzinde.EditorTools
             SetStep(steps.GetArrayElementAtIndex(0), "talk_to_mother", "Pati'yi bulmak icin annenle konus.", "Annen Pati'nin bir not biraktigini biliyor olabilir.", "A");
             SetStep(steps.GetArrayElementAtIndex(1), "prepare_bag", "Afet cantani hazirla.", "Dogru esyalari bul ve cantaya yerlestir.", "");
             SetStep(steps.GetArrayElementAtIndex(2), "talk_to_father", "Babaya git ve ikinci gorevi al.", "Afet cantasini tamamladin. Simdi babandan siradaki notu al.", "F");
-            SetStep(steps.GetArrayElementAtIndex(3), "go_to_ayse", "Ayse Teyze'nin evine git.", "Ayse Teyze'nin evindeki riskli esyalari guvenli hale getir.", "");
+            SetStep(steps.GetArrayElementAtIndex(3), "go_to_ayse", "Gri basamaklari takip ederek Ayse Teyze'nin evine git.", "Ayse Teyze'nin evindeki riskli esyalari guvenli hale getir.", "");
             SetStep(steps.GetArrayElementAtIndex(4), "secure_ayse_items", "Ayse Teyze'nin evindeki riskli esyalari sabitle.", "Devrilebilecek veya dusme riski olan esyalari E ile sabitle.", "");
             SetStep(steps.GetArrayElementAtIndex(5), "leave_ayse_house", "Ayse Teyze'nin evinden cik.", "Tum esyalari sabitledin. Dis kapiya gidip Ayse Teyze'nin yanina don.", "");
             SetStep(steps.GetArrayElementAtIndex(6), "talk_to_ayse", "Ayse Teyze ile konus ve siradaki ipucunu al.", "Ayse Teyze sana yeni gorevi ve A harfini verecek.", "A");

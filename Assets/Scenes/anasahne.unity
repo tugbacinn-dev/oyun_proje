@@ -19968,7 +19968,7 @@ MonoBehaviour:
     Description: Afet cantasini tamamladin. Simdi babandan siradaki notu al.
     RewardLetter: F
   - StepId: go_to_ayse
-    Title: Ayse Teyze'nin evine git.
+    Title: Gri basamaklari takip ederek Ayse Teyze'nin evine git.
     Description: Ayse Teyze'nin evindeki riskli esyalari guvenli hale getir.
     RewardLetter: 
   currentStepIndex: 0
