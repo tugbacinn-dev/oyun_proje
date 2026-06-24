@@ -66,6 +66,8 @@ namespace PatininIzinde.UI
         private GUIStyle counterStyle;
         private Texture2D earthquakeTrackTexture;
         private Texture2D earthquakeFillTexture;
+        private Material ayseArrowMaterial;
+        private Material ayseArrowTextMaterial;
 
         private void Awake()
         {
@@ -130,6 +132,7 @@ namespace PatininIzinde.UI
         {
             ResolveFinalDog();
             SetFinalDogVisible(true);
+            EnsureAyseDirectionArrows();
 
             gameplayHudVisible = !ShouldShowGameplayHud();
             UpdateGameplayHudVisibility();
@@ -847,6 +850,171 @@ namespace PatininIzinde.UI
             }
 
             finalDogRunRoutine = null;
+        }
+
+        private void EnsureAyseDirectionArrows()
+        {
+            if (GameObject.Find("AyseTeyze_Yon_Oklari") != null)
+            {
+                return;
+            }
+
+            Transform start = FindGuideStartPoint();
+            Transform target = FindAyseHousePoint();
+            if (start == null || target == null)
+            {
+                return;
+            }
+
+            Vector3 startPosition = start.position;
+            Vector3 targetPosition = target.position;
+            startPosition.y = 0.04f;
+            targetPosition.y = 0.04f;
+
+            Vector3 direction = targetPosition - startPosition;
+            direction.y = 0f;
+            float distance = direction.magnitude;
+            if (distance < 4f)
+            {
+                return;
+            }
+
+            direction.Normalize();
+            GameObject root = new GameObject("AyseTeyze_Yon_Oklari");
+            Mesh arrowMesh = CreateGroundArrowMesh();
+            Material arrowMaterial = GetAyseArrowMaterial();
+
+            int arrowCount = Mathf.Clamp(Mathf.FloorToInt(distance / 7f), 4, 9);
+            for (int i = 0; i < arrowCount; i++)
+            {
+                float t = (i + 1f) / (arrowCount + 1f);
+                Vector3 position = Vector3.Lerp(startPosition, targetPosition, t);
+                position.y = 0.055f;
+
+                GameObject arrow = new GameObject($"Ayse_Yon_Oku_{i + 1}");
+                arrow.transform.SetParent(root.transform, false);
+                arrow.transform.SetPositionAndRotation(position, Quaternion.LookRotation(direction, Vector3.up));
+                arrow.transform.localScale = new Vector3(2.1f, 1f, 2.1f);
+
+                MeshFilter meshFilter = arrow.AddComponent<MeshFilter>();
+                meshFilter.sharedMesh = arrowMesh;
+
+                MeshRenderer meshRenderer = arrow.AddComponent<MeshRenderer>();
+                meshRenderer.sharedMaterial = arrowMaterial;
+                meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                meshRenderer.receiveShadows = false;
+            }
+
+            CreateAyseArrowLabel(root.transform, targetPosition, direction);
+        }
+
+        private static Transform FindGuideStartPoint()
+        {
+            GameObject home =
+                GameObject.Find("BizimEv_Dis_Kapi") ??
+                GameObject.Find("BizimEv_Giris_Tetikleyici") ??
+                GameObject.Find("PlayerCameraRig");
+            return home != null ? home.transform : null;
+        }
+
+        private static Transform FindAyseHousePoint()
+        {
+            GameObject ayse =
+                GameObject.Find("AyseTeyze_Dis_Kapi") ??
+                GameObject.Find("AyseEv_Dis_Donus") ??
+                GameObject.Find("Ayse_Teyze");
+            return ayse != null ? ayse.transform : null;
+        }
+
+        private Material GetAyseArrowMaterial()
+        {
+            if (ayseArrowMaterial != null)
+            {
+                return ayseArrowMaterial;
+            }
+
+            Shader shader = Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Unlit/Color") ?? Shader.Find("Standard");
+            ayseArrowMaterial = new Material(shader)
+            {
+                name = "Ayse_Yon_Oku_Mat",
+                color = new Color(1f, 0.78f, 0.12f, 0.92f)
+            };
+            return ayseArrowMaterial;
+        }
+
+        private Material GetAyseArrowTextMaterial()
+        {
+            if (ayseArrowTextMaterial != null)
+            {
+                return ayseArrowTextMaterial;
+            }
+
+            Shader shader = Shader.Find("Universal Render Pipeline/Unlit") ?? Shader.Find("Unlit/Color") ?? Shader.Find("Standard");
+            ayseArrowTextMaterial = new Material(shader)
+            {
+                name = "Ayse_Yon_Yazisi_Mat",
+                color = new Color(0.16f, 0.08f, 0.03f, 1f)
+            };
+            return ayseArrowTextMaterial;
+        }
+
+        private static Mesh CreateGroundArrowMesh()
+        {
+            Mesh mesh = new Mesh
+            {
+                name = "Ayse_Ground_Arrow_Mesh"
+            };
+
+            mesh.vertices = new[]
+            {
+                new Vector3(-0.28f, 0f, -0.82f),
+                new Vector3(0.28f, 0f, -0.82f),
+                new Vector3(0.28f, 0f, 0.18f),
+                new Vector3(0.55f, 0f, 0.18f),
+                new Vector3(0f, 0f, 0.98f),
+                new Vector3(-0.55f, 0f, 0.18f),
+                new Vector3(-0.28f, 0f, 0.18f)
+            };
+
+            mesh.triangles = new[]
+            {
+                0, 2, 1,
+                0, 6, 2,
+                6, 5, 3,
+                6, 3, 2,
+                5, 4, 3
+            };
+
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+            return mesh;
+        }
+
+        private void CreateAyseArrowLabel(Transform parent, Vector3 targetPosition, Vector3 direction)
+        {
+            Vector3 labelPosition = targetPosition - direction * 3.2f;
+            labelPosition.y = 0.18f;
+
+            GameObject label = new GameObject("AyseTeyze_Yon_Yazisi");
+            label.transform.SetParent(parent, false);
+            label.transform.SetPositionAndRotation(labelPosition, Quaternion.Euler(90f, 0f, 0f));
+
+            TextMesh textMesh = label.AddComponent<TextMesh>();
+            textMesh.text = "Ayse Teyze Evi";
+            textMesh.anchor = TextAnchor.MiddleCenter;
+            textMesh.alignment = TextAlignment.Center;
+            textMesh.fontSize = 32;
+            textMesh.fontStyle = FontStyle.Bold;
+            textMesh.characterSize = 0.22f;
+            textMesh.color = new Color(0.16f, 0.08f, 0.03f, 1f);
+
+            MeshRenderer renderer = label.GetComponent<MeshRenderer>();
+            if (renderer != null)
+            {
+                renderer.sharedMaterial = GetAyseArrowTextMaterial();
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                renderer.receiveShadows = false;
+            }
         }
 
         private void SetPlayerInputEnabled(bool enabled)
