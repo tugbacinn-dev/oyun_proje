@@ -47,3 +47,4 @@ kazanır ve Pati’ye ulaşmaya bir adım daha yaklaşır.
 
 Görevleri tamamla, ipuçlarını topla, gizemi çöz ve sevimli dostun Pati’ye ulaşarak gerçek bir Afet Kahramanı ol! 🌟 
 # ▶Youtube Videosu
+https://www.youtube.com/watch?v=F6-hRoQB1-8
