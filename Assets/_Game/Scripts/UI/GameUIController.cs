@@ -860,6 +860,19 @@ namespace PatininIzinde.UI
 
         private Vector3 GetFinalDogRevealPosition()
         {
+            GameObject targetSurface = GameObject.Find("Env_Playground_6 (2)");
+            if (targetSurface != null)
+            {
+                Renderer targetRenderer = targetSurface.GetComponentInChildren<Renderer>();
+                if (targetRenderer != null)
+                {
+                    Bounds bounds = targetRenderer.bounds;
+                    return new Vector3(bounds.center.x, bounds.max.y + 0.04f, bounds.center.z);
+                }
+
+                return targetSurface.transform.position + Vector3.up * 0.65f;
+            }
+
             Transform viewTransform = Camera.main != null ? Camera.main.transform : null;
             if (viewTransform == null && playerController != null)
             {
