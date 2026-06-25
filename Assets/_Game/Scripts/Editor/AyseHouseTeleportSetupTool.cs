@@ -9,7 +9,7 @@ namespace PatininIzinde.EditorTools
 {
     public static class AyseHouseTeleportSetupTool
     {
-        [MenuItem("Pati'nin Izinde/Kurulum/Secili Evin Onune Ayse Teyze Giris Kapisi Koy")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Secili Evin Onune Perihan Teyze Giris Kapisi Koy")]
         public static void PlaceAyseExteriorDoorTrigger()
         {
             Scene scene = EditorSceneManager.GetActiveScene();
@@ -22,7 +22,7 @@ namespace PatininIzinde.EditorTools
             GameObject selectedHouse = Selection.activeGameObject;
             if (selectedHouse == null)
             {
-                EditorUtility.DisplayDialog("Secim yok", "Once Ayse Teyze'nin sehirdeki evini veya kapisini sec.", "Tamam");
+                EditorUtility.DisplayDialog("Secim yok", "Once Perihan Teyze'nin sehirdeki evini veya kapisini sec.", "Tamam");
                 return;
             }
 
@@ -85,7 +85,7 @@ namespace PatininIzinde.EditorTools
             }
 
             SerializedObject serializedDoor = new SerializedObject(teleportDoor);
-            serializedDoor.FindProperty("interactionText").stringValue = "E ile Ayse Teyze'nin evine gir";
+            serializedDoor.FindProperty("interactionText").stringValue = "E ile Perihan Teyze'nin evine gir";
             serializedDoor.FindProperty("targetPoint").objectReferenceValue = interiorTarget;
             serializedDoor.FindProperty("questManager").objectReferenceValue = Object.FindFirstObjectByType<QuestManager>();
             serializedDoor.FindProperty("requiredStepId").stringValue = "go_to_ayse";
@@ -96,7 +96,7 @@ namespace PatininIzinde.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Secili Kapiyi Ayse Teyze Giris Kapisi Yap")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Secili Kapiyi Perihan Teyze Giris Kapisi Yap")]
         public static void MakeSelectedDoorAyseEntrance()
         {
             Scene scene = EditorSceneManager.GetActiveScene();
@@ -109,7 +109,7 @@ namespace PatininIzinde.EditorTools
             GameObject selectedDoor = Selection.activeGameObject;
             if (selectedDoor == null)
             {
-                EditorUtility.DisplayDialog("Secim yok", "Once Ayse Teyze evinin onundeki kapi/trigger objesini sec.", "Tamam");
+                EditorUtility.DisplayDialog("Secim yok", "Once Perihan Teyze evinin onundeki kapi/trigger objesini sec.", "Tamam");
                 return;
             }
 
@@ -118,7 +118,7 @@ namespace PatininIzinde.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Ayse Evinden Cikisi Ayse Teyzenin Yanina Al")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Perihan Evinden Cikisi Perihan Teyzenin Yanina Al")]
         public static void MoveAyseReturnPointNearAyse()
         {
             Scene scene = EditorSceneManager.GetActiveScene();
@@ -167,7 +167,7 @@ namespace PatininIzinde.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Secili Objeyi Ayse Teyze Ic Kapi Noktasi Yap")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Secili Objeyi Perihan Teyze Ic Kapi Noktasi Yap")]
         public static void MakeSelectedObjectAyseInteriorEntry()
         {
             Scene scene = EditorSceneManager.GetActiveScene();
@@ -198,7 +198,7 @@ namespace PatininIzinde.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Secili Kapiyi Ayse Teyze Evinden Cikis Kapisi Yap")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Secili Kapiyi Perihan Teyze Evinden Cikis Kapisi Yap")]
         public static void MakeSelectedDoorAyseInteriorExit()
         {
             Scene scene = EditorSceneManager.GetActiveScene();
@@ -211,7 +211,7 @@ namespace PatininIzinde.EditorTools
             GameObject selectedDoor = Selection.activeGameObject;
             if (selectedDoor == null)
             {
-                EditorUtility.DisplayDialog("Secim yok", "Once Ayse Teyze evindeki cikis kapisini sec.", "Tamam");
+                EditorUtility.DisplayDialog("Secim yok", "Once Perihan Teyze evindeki cikis kapisini sec.", "Tamam");
                 return;
             }
 
@@ -245,13 +245,13 @@ namespace PatininIzinde.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Ayse Teyze Ic Girisini Biraz Yukari Al")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Perihan Teyze Ic Girisini Biraz Yukari Al")]
         public static void RaiseAyseInteriorEntry()
         {
             MoveAyseInteriorEntryHeight(0.35f);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Ayse Teyze Ic Girisini Biraz Asagi Al")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Perihan Teyze Ic Girisini Biraz Asagi Al")]
         public static void LowerAyseInteriorEntry()
         {
             MoveAyseInteriorEntryHeight(-0.35f);
@@ -384,7 +384,7 @@ namespace PatininIzinde.EditorTools
             }
 
             SerializedObject serializedDoor = new SerializedObject(teleportDoor);
-            serializedDoor.FindProperty("interactionText").stringValue = "E ile Ayse Teyze'nin evine gir";
+            serializedDoor.FindProperty("interactionText").stringValue = "E ile Perihan Teyze'nin evine gir";
             serializedDoor.FindProperty("targetPoint").objectReferenceValue = FindOrCreateAyseInteriorEntry(scene).transform;
             serializedDoor.FindProperty("questManager").objectReferenceValue = Object.FindFirstObjectByType<QuestManager>();
             serializedDoor.FindProperty("requiredStepId").stringValue = "go_to_ayse";

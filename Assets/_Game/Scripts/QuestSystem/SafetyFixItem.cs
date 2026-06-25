@@ -8,8 +8,11 @@ namespace PatininIzinde.QuestSystem
         [SerializeField] private SafetyFixManager safetyFixManager;
         [SerializeField] private string itemDisplayName = "Esya";
         [SerializeField] private string interactionText = "E ile sabitle";
+        [SerializeField] private AudioClip fixSound;
+        [SerializeField, Range(0f, 1f)] private float fixSoundVolume = 0.85f;
 
         private bool fixedInPlace;
+        private static AudioClip sharedFixSound;
 
         public string InteractionText => $"{interactionText}: {itemDisplayName}";
         public bool CanInteract => !fixedInPlace && safetyFixManager != null && safetyFixManager.IsActive;
@@ -30,6 +33,29 @@ namespace PatininIzinde.QuestSystem
             }
 
             fixedInPlace = true;
+            PlayFixSound();
+        }
+
+        private void PlayFixSound()
+        {
+            AudioClip clip = fixSound != null ? fixSound : GetSharedFixSound();
+            if (clip == null)
+            {
+                Debug.LogWarning("Sabitleme sesi bulunamadi: Resources/Audio/fix_drill");
+                return;
+            }
+
+            AudioSource.PlayClipAtPoint(clip, transform.position, fixSoundVolume);
+        }
+
+        private static AudioClip GetSharedFixSound()
+        {
+            if (sharedFixSound == null)
+            {
+                sharedFixSound = Resources.Load<AudioClip>("Audio/fix_drill");
+            }
+
+            return sharedFixSound;
         }
     }
 }

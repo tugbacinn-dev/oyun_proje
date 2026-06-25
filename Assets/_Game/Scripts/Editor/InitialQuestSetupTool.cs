@@ -49,7 +49,7 @@ namespace PatininIzinde.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Secili Karakteri Ayse Teyze Yap")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Secili Karakteri Perihan Teyze Yap")]
         public static void MakeSelectedCharacterAyseTeyze()
         {
             Scene scene = EditorSceneManager.GetActiveScene();
@@ -62,7 +62,7 @@ namespace PatininIzinde.EditorTools
             GameObject selected = Selection.activeGameObject;
             if (selected == null)
             {
-                EditorUtility.DisplayDialog("Secim yok", "Once Ayse Teyze olacak karakteri sec.", "Tamam");
+                EditorUtility.DisplayDialog("Secim yok", "Once Perihan Teyze olacak karakteri sec.", "Tamam");
                 return;
             }
 
@@ -75,7 +75,7 @@ namespace PatininIzinde.EditorTools
             EditorSceneManager.MarkSceneDirty(scene);
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Ayse Teyze Notunu Guncelle")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Perihan Teyze Notunu Guncelle")]
         public static void UpdateAyseNoteOnly()
         {
             Scene scene = EditorSceneManager.GetActiveScene();
@@ -111,17 +111,17 @@ namespace PatininIzinde.EditorTools
             SerializedProperty steps = serializedQuest.FindProperty("steps");
             steps.arraySize = 12;
 
-            SetStep(steps.GetArrayElementAtIndex(0), "talk_to_mother", "Pati'yi bulmak icin annenle konus.", "Annen Pati'nin bir not biraktigini biliyor olabilir.", "A");
+            SetStep(steps.GetArrayElementAtIndex(0), "talk_to_mother", "Taci'yi bulmak icin annenle konus.", "Annen Taci'nin bir not biraktigini biliyor olabilir.", "A");
             SetStep(steps.GetArrayElementAtIndex(1), "prepare_bag", "Afet cantani hazirla.", "Dogru esyalari bul ve cantaya yerlestir.", "");
             SetStep(steps.GetArrayElementAtIndex(2), "talk_to_father", "Babaya git ve ikinci gorevi al.", "Afet cantasini tamamladin. Simdi babandan siradaki notu al.", "F");
-            SetStep(steps.GetArrayElementAtIndex(3), "go_to_ayse", "Gri basamaklari takip ederek Ayse Teyze'nin evine git.", "Ayse Teyze'nin evindeki riskli esyalari guvenli hale getir.", "");
-            SetStep(steps.GetArrayElementAtIndex(4), "secure_ayse_items", "Ayse Teyze'nin evindeki riskli esyalari sabitle.", "Devrilebilecek veya dusme riski olan esyalari E ile sabitle.", "");
-            SetStep(steps.GetArrayElementAtIndex(5), "leave_ayse_house", "Ayse Teyze'nin evinden cik.", "Tum esyalari sabitledin. Dis kapiya gidip Ayse Teyze'nin yanina don.", "");
-            SetStep(steps.GetArrayElementAtIndex(6), "talk_to_ayse", "Ayse Teyze ile konus ve siradaki ipucunu al.", "Ayse Teyze sana yeni gorevi ve A harfini verecek.", "A");
+            SetStep(steps.GetArrayElementAtIndex(3), "go_to_ayse", "Gri basamaklari takip ederek Perihan Teyze'nin evine git.", "Perihan Teyze'nin evindeki riskli esyalari guvenli hale getir.", "");
+            SetStep(steps.GetArrayElementAtIndex(4), "secure_ayse_items", "Perihan Teyze'nin evindeki riskli esyalari sabitle.", "Devrilebilecek veya dusme riski olan esyalari E ile sabitle.", "");
+            SetStep(steps.GetArrayElementAtIndex(5), "leave_ayse_house", "Perihan Teyze'nin evinden cik.", "Tum esyalari sabitledin. Dis kapiya gidip Perihan Teyze'nin yanina don.", "");
+            SetStep(steps.GetArrayElementAtIndex(6), "talk_to_ayse", "Perihan Teyze ile konus ve siradaki ipucunu al.", "Perihan Teyze sana yeni gorevi ve A harfini verecek.", "A");
             SetStep(steps.GetArrayElementAtIndex(7), "go_back_home", "Bizim eve geri don.", "Cok-Kapan-Tutun simulasyonu icin kendi evine geri git.", "");
             SetStep(steps.GetArrayElementAtIndex(8), "enter_home_for_simulation", "Bizim evin kapisindan iceri gir.", "Evin kapisinda E tusuna basarak iceri gir.", "");
             SetStep(steps.GetArrayElementAtIndex(9), "earthquake_moment", "Deprem aninda guvenli noktaya gec.", "Cok-Kapan-Tutun davranisini uygulamak icin guvenli noktayi bul.", "");
-            SetStep(steps.GetArrayElementAtIndex(10), "talk_to_can", "Evin onunde seni bekleyen Can'dan son gorevi al.", "Arkadasin Can ile konus ve son guvenli toplanma gorevini ogren.", "D");
+            SetStep(steps.GetArrayElementAtIndex(10), "talk_to_can", "Evin onunde seni bekleyen Cem'den son gorevi al.", "Arkadasin Cem ile konus ve son guvenli toplanma gorevini ogren.", "D");
             SetStep(steps.GetArrayElementAtIndex(11), "go_to_assembly_area", "Guvenli toplanma alanina git.", "Depremden sonra binadan uzak, acik ve guvenli toplanma alanina ulas.", "");
 
             serializedQuest.FindProperty("currentStepIndex").intValue = 0;
@@ -175,7 +175,7 @@ namespace PatininIzinde.EditorTools
             questLabel.text = "GOREV";
 
             Text questText = CreateText(questPanel.transform, "QuestText", new Vector2(24f, -34f), new Vector2(590f, 44f), 24, TextAnchor.UpperLeft, Color.white);
-            questText.text = "Pati'yi bulmak icin annenle konus.";
+            questText.text = "Taci'yi bulmak icin annenle konus.";
 
             GameObject interactionPanel = CreateAnchoredPanel(
                 canvasObject.transform,
@@ -313,7 +313,7 @@ namespace PatininIzinde.EditorTools
             serializedNote.FindProperty("interactionText").stringValue = "E ile annenle konus";
             serializedNote.FindProperty("noteTitle").stringValue = "Annenin Notu";
             serializedNote.FindProperty("noteBody").stringValue =
-                "Kizim, Pati'yi bulman icin ilk ipucu harfin A.\n\nBu harfleri aklinda tut; gorevler bittiginde isine yarayacak.\n\nSimdi afet gorevlerinin ilkini veriyorum: deprem cantani hazirla.";
+                "Kizim Cilek, Taci'yi bulman icin ilk ipucu harfin A.\n\nBu harfleri aklinda tut; gorevler bittiginde isine yarayacak.\n\nSimdi afet gorevlerinin ilkini veriyorum: deprem cantani hazirla.";
             serializedNote.FindProperty("completeStepAfterReading").boolValue = true;
             serializedNote.ApplyModifiedPropertiesWithoutUndo();
         }
@@ -349,7 +349,7 @@ namespace PatininIzinde.EditorTools
             serializedNote.FindProperty("interactionText").stringValue = "E ile babanla konus";
             serializedNote.FindProperty("noteTitle").stringValue = "Babanin Notu";
             serializedNote.FindProperty("noteBody").stringValue =
-                "Aferin kizim, afet cantani hazirlamayi ogrendin.\n\nIkinci ipucu harfin F. Aman diyeyim, harfleri unutma.\n\nSimdi ucuncu gorevin geliyor: Ayse Teyze'nin evine git ve sabitlenmesi gereken esyalari sabitle.";
+                "Aferin kizim Cilek, afet cantani hazirlamayi ogrendin.\n\nIkinci ipucu harfin F. Aman diyeyim, harfleri unutma.\n\nSimdi ucuncu gorevin geliyor: Perihan Teyze'nin evine git ve sabitlenmesi gereken esyalari sabitle.";
             serializedNote.FindProperty("completeStepAfterReading").boolValue = true;
             serializedNote.ApplyModifiedPropertiesWithoutUndo();
         }
@@ -382,8 +382,8 @@ namespace PatininIzinde.EditorTools
             serializedNote.FindProperty("questManager").objectReferenceValue = questManager;
             serializedNote.FindProperty("uiController").objectReferenceValue = uiController;
             serializedNote.FindProperty("requiredStepId").stringValue = "talk_to_ayse";
-            serializedNote.FindProperty("interactionText").stringValue = "E ile Ayse Teyze ile konus";
-            serializedNote.FindProperty("noteTitle").stringValue = "Ayse Teyze'nin Notu";
+            serializedNote.FindProperty("interactionText").stringValue = "E ile Perihan Teyze ile konus";
+            serializedNote.FindProperty("noteTitle").stringValue = "Perihan Teyze'nin Notu";
             serializedNote.FindProperty("noteBody").stringValue =
                 "Kuzum, yardim ettigin icin cok tesekkur ederim.\n\nIpucu harfin A. Bu harfleri unutma.\n\nSimdi yeni gorevin: evine geri gidip Cok-Kapan-Tutun simulasyonunu ogren bakalim.";
             serializedNote.FindProperty("completeStepAfterReading").boolValue = true;

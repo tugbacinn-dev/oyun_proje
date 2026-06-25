@@ -128,7 +128,7 @@ namespace PatininIzinde.UI
             Vector2 playerMap = WorldToMap(player.position, inner);
 
             DrawMapLabel(homeMap, "Bizim Ev", homeStyle, inner);
-            DrawMapLabel(ayseMap, "Ayse Teyze", ayseStyle, inner);
+            DrawMapLabel(ayseMap, "Perihan Teyze", ayseStyle, inner);
             DrawMapLabel(assemblyMap, "Guvenli Alan", assemblyStyle, inner);
             DrawPlayerMarker(playerMap);
 

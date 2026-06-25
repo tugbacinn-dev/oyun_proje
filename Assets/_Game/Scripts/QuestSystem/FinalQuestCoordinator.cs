@@ -143,9 +143,9 @@ namespace PatininIzinde.QuestSystem
                 questManager,
                 uiController,
                 TalkToCanStepId,
-                "E ile Can ile konus",
-                "Can'in Notu",
-                "Kanka, son ipucu harfin D.\n\nBuraya kadar cok iyi geldin.\n\nSimdi yesil basamaklari takip ederek guvenli toplanma alanina git, son gorevini yerine getir ve Pati'yi bul.",
+                "E ile Cem ile konus",
+                "Cem'in Notu",
+                "Kanka, son ipucu harfin D.\n\nBuraya kadar cok iyi geldin.\n\nSimdi yesil basamaklari takip ederek guvenli toplanma alanina git, son gorevini yerine getir ve Taci'yi bul.",
                 true);
         }
 

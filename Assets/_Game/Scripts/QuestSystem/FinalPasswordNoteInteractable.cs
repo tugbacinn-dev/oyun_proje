@@ -39,8 +39,8 @@ namespace PatininIzinde.QuestSystem
             }
 
             uiController.ShowPasswordPrompt(
-                "Pati'nin Sifresi",
-                "Pati'yi bulmak icin sana verilen ipuclarindan topladigin sifreyi gir.");
+                "Taci'nin Sifresi",
+                "Taci'yi bulmak icin sana verilen ipuclarindan topladigin sifreyi gir.");
         }
 
         private void ResolveReferences()

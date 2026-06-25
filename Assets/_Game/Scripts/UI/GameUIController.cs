@@ -17,6 +17,10 @@ namespace PatininIzinde.UI
         [SerializeField] private GameObject notePanel;
         [SerializeField] private Text noteTitleText;
         [SerializeField] private Text noteBodyText;
+        [SerializeField] private Texture2D endingScreenTexture;
+        [SerializeField] private AudioClip endingScreenSound;
+        [SerializeField] private AudioClip gameMusic;
+        [SerializeField, Range(0f, 1f)] private float gameMusicVolume = 0.35f;
 
         private string currentQuestTitle = "";
         private string currentInteractionTitle = "";
@@ -28,6 +32,8 @@ namespace PatininIzinde.UI
         private string passwordPromptBody = "";
         private string passwordInput = "";
         private string passwordFeedback = "";
+        private string emergencyInput = "";
+        private string emergencyFeedback = "";
         private float earthquakeProgress;
         private float earthquakeShakeTimer;
         private float earthquakeCrouchOffset;
@@ -40,6 +46,12 @@ namespace PatininIzinde.UI
         private bool earthquakeSimulationActive;
         private bool gameplayHudVisible = true;
         private bool isPasswordPromptVisible;
+        private bool isEmergencyPromptVisible;
+        private bool isEmergencyInfoVisible;
+        private bool isEndingScreenVisible;
+        private bool endingSoundPlayed;
+        private AudioSource endingAudioSource;
+        private AudioSource gameMusicSource;
         private FirstPersonCameraController playerController;
         private GameObject finalDog;
         private bool finalDogRevealed;
@@ -47,6 +59,7 @@ namespace PatininIzinde.UI
         private Vector3 finalDogInitialPosition;
         private Quaternion finalDogInitialRotation;
         private Vector3 finalDogInitialScale;
+        private const string FinalDogTag = "pati";
         private const float FinalDogAutoRevealDelay = 180f;
         private static readonly Vector3 finalDogFallbackPosition = new Vector3(54.69f, -0.02f, 49.59f);
         private GameObject questTextRoot;
@@ -64,6 +77,7 @@ namespace PatininIzinde.UI
         private GUIStyle noteHintStyle;
         private GUIStyle passwordInputStyle;
         private GUIStyle passwordFeedbackStyle;
+        private GUIStyle endingFallbackStyle;
         private GUIStyle counterStyle;
         private Texture2D earthquakeTrackTexture;
         private Texture2D earthquakeFillTexture;
@@ -149,6 +163,7 @@ namespace PatininIzinde.UI
             }
 
             HideNote();
+            PlayGameMusic();
         }
 
         private void Update()
@@ -156,7 +171,6 @@ namespace PatininIzinde.UI
             UpdateInteractionText();
             UpdateEarthquakeFeedback();
             UpdateGameplayHudVisibility();
-            UpdateFinalDogAutoReveal();
 
             if (isPasswordPromptVisible)
             {
@@ -169,6 +183,25 @@ namespace PatininIzinde.UI
                 {
                     HidePasswordPrompt();
                 }
+            }
+
+            if (isEmergencyPromptVisible)
+            {
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+                {
+                    SubmitEmergencyPrompt();
+                }
+            }
+
+            if (isEmergencyInfoVisible &&
+                (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Space)))
+            {
+                ShowEndingScreen();
+            }
+
+            if (isEndingScreenVisible && Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();
             }
 
             if (notePanel != null && notePanel.activeSelf && Input.GetKeyDown(KeyCode.Space))
@@ -185,7 +218,7 @@ namespace PatininIzinde.UI
             }
 
             RevealFinalDog();
-            currentQuestTitle = "Pati ortaya cikti! Etrafina bak.";
+            currentQuestTitle = "Taci ortaya cikti! Etrafina bak.";
             if (questText != null)
             {
                 questText.text = currentQuestTitle;
@@ -421,6 +454,12 @@ namespace PatininIzinde.UI
 
         private void OnGUI()
         {
+            if (isEndingScreenVisible)
+            {
+                DrawEndingScreen();
+                return;
+            }
+
             if (!ShouldShowGameplayHud())
             {
                 return;
@@ -471,6 +510,16 @@ namespace PatininIzinde.UI
             if (isPasswordPromptVisible)
             {
                 DrawPasswordPrompt();
+            }
+
+            if (isEmergencyPromptVisible)
+            {
+                DrawEmergencyPrompt();
+            }
+
+            if (isEmergencyInfoVisible)
+            {
+                DrawEmergencyInfo();
             }
         }
 
@@ -598,6 +647,15 @@ namespace PatininIzinde.UI
                 normal = { textColor = new Color(0.16f, 0.45f, 0.26f) }
             };
 
+            endingFallbackStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 34,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = Color.white },
+                wordWrap = true
+            };
+
             counterStyle = new GUIStyle(GUI.skin.label)
             {
                 fontSize = 34,
@@ -683,9 +741,204 @@ namespace PatininIzinde.UI
             }
 
             string feedback = string.IsNullOrWhiteSpace(passwordFeedback)
-                ? "Ipuclarini sirayla dusun: anne, baba, Ayse Teyze, Can."
+                ? "Ipuclarini sirayla dusun: anne, baba, Perihan Teyze, Cem."
                 : passwordFeedback;
             GUI.Label(new Rect(rect.x + 58f, rect.y + rect.height - 64f, rect.width - 116f, 38f), feedback, passwordFeedbackStyle);
+        }
+
+        private void ShowEmergencyPrompt()
+        {
+            isEmergencyPromptVisible = true;
+            isEmergencyInfoVisible = false;
+            emergencyInput = "";
+            emergencyFeedback = "";
+            currentInteractionTitle = "";
+            SetPlayerInputEnabled(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        private void DrawEmergencyPrompt()
+        {
+            float width = Mathf.Min(760f, Screen.width - 80f);
+            float height = Mathf.Min(430f, Screen.height - 80f);
+            Rect rect = new Rect((Screen.width - width) * 0.5f, (Screen.height - height) * 0.5f, width, height);
+
+            GUI.Box(new Rect(rect.x + 8f, rect.y + 10f, rect.width, rect.height), GUIContent.none, earthquakeBoxStyle);
+            GUI.Box(rect, GUIContent.none, noteBoxStyle);
+            GUI.DrawTexture(new Rect(rect.x, rect.y, rect.width, 18f), earthquakeFillTexture);
+
+            GUI.Label(new Rect(rect.x + 48f, rect.y + 34f, rect.width - 96f, 54f), "Acil Durum Bilgisi", noteTitleStyle);
+            GUI.Label(
+                new Rect(rect.x + 64f, rect.y + 112f, rect.width - 128f, 90f),
+                "Peki acil bir durum olursa hangi numarayi araman gerek biliyor musun?",
+                noteBodyStyle);
+
+            GUI.SetNextControlName("EmergencyPromptInput");
+            emergencyInput = GUI.TextField(new Rect(rect.x + 250f, rect.y + 218f, rect.width - 500f, 56f), emergencyInput, 3, passwordInputStyle);
+            GUI.FocusControl("EmergencyPromptInput");
+
+            if (GUI.Button(new Rect(rect.x + 230f, rect.y + 296f, rect.width - 460f, 48f), "CEVAPLA", interactionBoxStyle))
+            {
+                SubmitEmergencyPrompt();
+            }
+
+            string feedback = string.IsNullOrWhiteSpace(emergencyFeedback)
+                ? "Ipucu: Acil yardim hatti uc rakamlidir."
+                : emergencyFeedback;
+            GUI.Label(new Rect(rect.x + 58f, rect.y + rect.height - 64f, rect.width - 116f, 38f), feedback, passwordFeedbackStyle);
+        }
+
+        private void SubmitEmergencyPrompt()
+        {
+            string normalized = emergencyInput.Trim();
+            if (normalized == "112")
+            {
+                isEmergencyPromptVisible = false;
+                isEmergencyInfoVisible = true;
+                emergencyFeedback = "";
+                return;
+            }
+
+            emergencyFeedback = "Tekrar dusun. Ambulans, itfaiye, polis ve AFAD icin ortak acil cagri numarasi nedir?";
+        }
+
+        private void DrawEmergencyInfo()
+        {
+            float width = Mathf.Min(840f, Screen.width - 80f);
+            float height = Mathf.Min(430f, Screen.height - 80f);
+            Rect rect = new Rect((Screen.width - width) * 0.5f, (Screen.height - height) * 0.5f, width, height);
+
+            GUI.Box(new Rect(rect.x + 8f, rect.y + 10f, rect.width, rect.height), GUIContent.none, earthquakeBoxStyle);
+            GUI.Box(rect, GUIContent.none, noteBoxStyle);
+            GUI.DrawTexture(new Rect(rect.x, rect.y, rect.width, 18f), earthquakeFillTexture);
+
+            GUI.Label(new Rect(rect.x + 48f, rect.y + 34f, rect.width - 96f, 54f), "112 Acil Cagri", noteTitleStyle);
+            GUI.Label(
+                new Rect(rect.x + 64f, rect.y + 112f, rect.width - 128f, 150f),
+                "Dogru cevap: 112.\n\n112; ambulans, itfaiye, polis, jandarma ve AFAD gibi acil yardim birimlerine ulasmak icindir. Gereksiz yere aranmamali ve mesgul edilmemelidir.",
+                noteBodyStyle);
+
+            if (GUI.Button(new Rect(rect.x + 230f, rect.y + 306f, rect.width - 460f, 48f), "DEVAM", interactionBoxStyle))
+            {
+                ShowEndingScreen();
+            }
+
+            GUI.Label(new Rect(rect.x + 58f, rect.y + rect.height - 56f, rect.width - 116f, 34f), "Devam etmek icin Enter veya Space tusuna bas", passwordFeedbackStyle);
+        }
+
+        private void ShowEndingScreen()
+        {
+            isEndingScreenVisible = true;
+            isNoteVisible = false;
+            isPasswordPromptVisible = false;
+            isEmergencyPromptVisible = false;
+            isEmergencyInfoVisible = false;
+            currentInteractionTitle = "";
+            currentQuestTitle = "";
+
+            if (notePanel != null)
+            {
+                notePanel.SetActive(false);
+            }
+
+            if (questTextRoot != null)
+            {
+                questTextRoot.SetActive(false);
+            }
+
+            if (interactionTextRoot != null)
+            {
+                interactionTextRoot.SetActive(false);
+            }
+
+            SetPlayerInputEnabled(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            PlayEndingSound();
+            Debug.Log("AFAD dogru. Bitis ekrani acildi.");
+        }
+
+        private void PlayEndingSound()
+        {
+            if (endingSoundPlayed)
+            {
+                return;
+            }
+
+            if (endingScreenSound == null)
+            {
+                endingScreenSound = Resources.Load<AudioClip>("Audio/ending_woof");
+            }
+
+            if (endingScreenSound == null)
+            {
+                Debug.LogWarning("Bitis ekrani sesi bulunamadi: Resources/Audio/ending_woof");
+                return;
+            }
+
+            if (endingAudioSource == null)
+            {
+                endingAudioSource = gameObject.GetComponent<AudioSource>();
+                if (endingAudioSource == null)
+                {
+                    endingAudioSource = gameObject.AddComponent<AudioSource>();
+                }
+
+                endingAudioSource.playOnAwake = false;
+                endingAudioSource.spatialBlend = 0f;
+            }
+
+            endingSoundPlayed = true;
+            endingAudioSource.PlayOneShot(endingScreenSound);
+        }
+
+        private void PlayGameMusic()
+        {
+            if (gameMusicSource != null && gameMusicSource.isPlaying)
+            {
+                return;
+            }
+
+            if (gameMusic == null)
+            {
+                gameMusic = Resources.Load<AudioClip>("Audio/game_music");
+            }
+
+            if (gameMusic == null)
+            {
+                Debug.LogWarning("Oyun muzigi bulunamadi: Resources/Audio/game_music");
+                return;
+            }
+
+            if (gameMusicSource == null)
+            {
+                gameMusicSource = gameObject.AddComponent<AudioSource>();
+                gameMusicSource.playOnAwake = false;
+                gameMusicSource.loop = true;
+                gameMusicSource.spatialBlend = 0f;
+            }
+
+            gameMusicSource.clip = gameMusic;
+            gameMusicSource.volume = gameMusicVolume;
+            gameMusicSource.Play();
+        }
+
+        private void DrawEndingScreen()
+        {
+            EnsureStyles();
+            GUI.DrawTexture(new Rect(0f, 0f, Screen.width, Screen.height), Texture2D.blackTexture, ScaleMode.StretchToFill);
+
+            if (endingScreenTexture != null)
+            {
+                GUI.DrawTexture(new Rect(0f, 0f, Screen.width, Screen.height), endingScreenTexture, ScaleMode.ScaleAndCrop);
+                return;
+            }
+
+            GUI.Label(
+                new Rect(40f, 0f, Screen.width - 80f, Screen.height),
+                "Bitis ekrani gorseli atanmadi.\nGameUI uzerindeki Ending Screen Texture alanina resmi surukle.",
+                endingFallbackStyle);
         }
 
         private void SubmitPasswordPrompt()
@@ -693,12 +946,8 @@ namespace PatininIzinde.UI
             string normalized = passwordInput.Trim().ToUpperInvariant();
             if (normalized == "AFAD")
             {
-                passwordFeedback = "Sifre dogru! Pati geldi.";
                 HidePasswordPrompt();
-                RevealFinalDog();
-                ShowNote(
-                    "AFAD Bilgisi",
-                    "AFAD, afet ve acil durumlarda arama kurtarma, yardim ve koordinasyon calismalarini yurutur.\n\nEtrafina iyice bak, Pati geldi buralarda.");
+                ShowEmergencyPrompt();
                 return;
             }
 
@@ -720,11 +969,27 @@ namespace PatininIzinde.UI
                     continue;
                 }
 
+                if (IsFinalDogTagged(candidate))
+                {
+                    finalDog = candidate;
+                    CacheFinalDogInitialTransform();
+                    Debug.Log($"Taci tag ile bulundu: {finalDog.name}");
+                    return;
+                }
+            }
+
+            foreach (GameObject candidate in sceneObjects)
+            {
+                if (!candidate.scene.IsValid())
+                {
+                    continue;
+                }
+
                 if (IsFinalDogCandidate(candidate) && candidate.transform.parent == null)
                 {
                     finalDog = candidate;
                     CacheFinalDogInitialTransform();
-                    Debug.Log($"Pati bulundu: {finalDog.name}");
+                    Debug.Log($"Taci bulundu: {finalDog.name}");
                     return;
                 }
             }
@@ -740,7 +1005,7 @@ namespace PatininIzinde.UI
                 {
                     finalDog = candidate.transform.root.gameObject;
                     CacheFinalDogInitialTransform();
-                    Debug.Log($"Pati bulundu: {finalDog.name}");
+                    Debug.Log($"Taci bulundu: {finalDog.name}");
                     return;
                 }
             }
@@ -751,6 +1016,11 @@ namespace PatininIzinde.UI
             if (candidate == null)
             {
                 return false;
+            }
+
+            if (IsFinalDogTagged(candidate))
+            {
+                return true;
             }
 
             string candidateName = candidate.name.ToLowerInvariant();
@@ -771,6 +1041,11 @@ namespace PatininIzinde.UI
             }
 
             return false;
+        }
+
+        private static bool IsFinalDogTagged(GameObject candidate)
+        {
+            return candidate != null && candidate.tag == FinalDogTag;
         }
 
         private void CacheFinalDogInitialTransform()
@@ -811,6 +1086,10 @@ namespace PatininIzinde.UI
             }
 
             finalDog.SetActive(true);
+            if (visible)
+            {
+                SetChildrenActive(finalDog.transform, true);
+            }
 
             Renderer[] renderers = finalDog.GetComponentsInChildren<Renderer>(true);
             foreach (Renderer renderer in renderers)
@@ -849,9 +1128,9 @@ namespace PatininIzinde.UI
                 animator.enabled = true;
             }
 
-            Debug.Log($"AFAD dogru. Pati gorunur yapildi: {finalDog.name} / {finalDog.transform.position}");
+            Debug.Log($"AFAD dogru. Taci gorunur yapildi: {finalDog.name} / {finalDog.transform.position}");
 
-            currentQuestTitle = "Etrafina iyice bak, Pati geldi buralarda.";
+            currentQuestTitle = "Etrafina iyice bak, Taci geldi buralarda.";
             if (questText != null)
             {
                 questText.text = currentQuestTitle;
@@ -931,7 +1210,7 @@ namespace PatininIzinde.UI
                 return;
             }
 
-            Transform existingMarker = finalDog.transform.Find("Pati_Gorunur_Etiket");
+            Transform existingMarker = finalDog.transform.Find("Taci_Gorunur_Etiket");
             if (existingMarker != null)
             {
                 existingMarker.localPosition = new Vector3(0f, 2.2f, 0f);
@@ -939,14 +1218,14 @@ namespace PatininIzinde.UI
                 return;
             }
 
-            GameObject marker = new GameObject("Pati_Gorunur_Etiket");
+            GameObject marker = new GameObject("Taci_Gorunur_Etiket");
             marker.transform.SetParent(finalDog.transform, false);
             marker.transform.localPosition = new Vector3(0f, 2.2f, 0f);
             marker.transform.localRotation = Quaternion.Euler(70f, 0f, 0f);
             marker.transform.localScale = Vector3.one * 0.22f;
 
             TextMesh label = marker.AddComponent<TextMesh>();
-            label.text = "PATI BURADA";
+            label.text = "TACI BURADA";
             label.fontSize = 64;
             label.characterSize = 0.18f;
             label.anchor = TextAnchor.MiddleCenter;
@@ -976,6 +1255,7 @@ namespace PatininIzinde.UI
             }
 
             finalDog.SetActive(true);
+            SetChildrenActive(finalDog.transform, true);
 
             Renderer[] renderers = finalDog.GetComponentsInChildren<Renderer>(true);
             foreach (Renderer renderer in renderers)
@@ -991,24 +1271,38 @@ namespace PatininIzinde.UI
             }
         }
 
+        private static void SetChildrenActive(Transform root, bool active)
+        {
+            if (root == null)
+            {
+                return;
+            }
+
+            foreach (Transform child in root)
+            {
+                child.gameObject.SetActive(active);
+                SetChildrenActive(child, active);
+            }
+        }
+
         private static GameObject CreateEmergencyPati()
         {
-            GameObject root = new GameObject("Pati");
+            GameObject root = new GameObject("Taci");
             GameObject body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            body.name = "Pati_Govde";
+            body.name = "Taci_Govde";
             body.transform.SetParent(root.transform, false);
             body.transform.localPosition = new Vector3(0f, 0.45f, 0f);
             body.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
             body.transform.localScale = new Vector3(0.45f, 0.55f, 0.45f);
 
             GameObject head = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            head.name = "Pati_Bas";
+            head.name = "Taci_Bas";
             head.transform.SetParent(root.transform, false);
             head.transform.localPosition = new Vector3(0f, 0.8f, 0.48f);
             head.transform.localScale = new Vector3(0.42f, 0.36f, 0.36f);
 
             GameObject tail = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            tail.name = "Pati_Kuyruk";
+            tail.name = "Taci_Kuyruk";
             tail.transform.SetParent(root.transform, false);
             tail.transform.localPosition = new Vector3(0f, 0.65f, -0.55f);
             tail.transform.localRotation = Quaternion.Euler(55f, 0f, 0f);
@@ -1022,7 +1316,7 @@ namespace PatininIzinde.UI
             }
 
             root.transform.localScale = Vector3.one;
-            Debug.LogWarning("Sahnedeki kopek bulunamadi; gecici Pati olusturuldu.");
+            Debug.LogWarning("Sahnedeki kopek bulunamadi; gecici Taci olusturuldu.");
             return root;
         }
 
@@ -1174,7 +1468,7 @@ namespace PatininIzinde.UI
             label.transform.SetPositionAndRotation(labelPosition, Quaternion.Euler(90f, 0f, 0f));
 
             TextMesh textMesh = label.AddComponent<TextMesh>();
-            textMesh.text = "Ayse Teyze Evi";
+            textMesh.text = "Perihan Teyze Evi";
             textMesh.anchor = TextAnchor.MiddleCenter;
             textMesh.alignment = TextAlignment.Center;
             textMesh.fontSize = 32;

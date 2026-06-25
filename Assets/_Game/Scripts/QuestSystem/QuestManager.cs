@@ -7,6 +7,10 @@ namespace PatininIzinde.QuestSystem
     {
         [SerializeField] private QuestStep[] steps;
         [SerializeField] private int currentStepIndex;
+        [SerializeField] private AudioClip questCompleteSound;
+        [SerializeField, Range(0f, 1f)] private float questCompleteSoundVolume = 0.85f;
+
+        private AudioSource questAudioSource;
 
         public event Action<QuestStep> StepChanged;
         public event Action<string> LetterCollected;
@@ -45,8 +49,37 @@ namespace PatininIzinde.QuestSystem
                 LetterCollected?.Invoke(completedStep.RewardLetter);
             }
 
+            PlayQuestCompleteSound();
             currentStepIndex++;
             NotifyStepChanged();
+        }
+
+        private void PlayQuestCompleteSound()
+        {
+            if (questCompleteSound == null)
+            {
+                questCompleteSound = Resources.Load<AudioClip>("Audio/quest_complete");
+            }
+
+            if (questCompleteSound == null)
+            {
+                Debug.LogWarning("Gorev tamamlama sesi bulunamadi: Resources/Audio/quest_complete");
+                return;
+            }
+
+            if (questAudioSource == null)
+            {
+                questAudioSource = gameObject.GetComponent<AudioSource>();
+                if (questAudioSource == null)
+                {
+                    questAudioSource = gameObject.AddComponent<AudioSource>();
+                }
+
+                questAudioSource.playOnAwake = false;
+                questAudioSource.spatialBlend = 0f;
+            }
+
+            questAudioSource.PlayOneShot(questCompleteSound, questCompleteSoundVolume);
         }
 
         private void NotifyStepChanged()
@@ -63,20 +96,20 @@ namespace PatininIzinde.QuestSystem
 
             AppendStepIfMissing(
                 "secure_ayse_items",
-                "Ayse Teyze'nin evindeki riskli esyalari sabitle.",
+                "Perihan Teyze'nin evindeki riskli esyalari sabitle.",
                 "Devrilebilecek veya dusme riski olan esyalari E ile sabitle.",
                 "");
 
             AppendStepIfMissing(
                 "leave_ayse_house",
-                "Ayse Teyze'nin evinden cik.",
-                "Tum esyalari sabitledin. Dis kapiya gidip Ayse Teyze'nin yanina don.",
+                "Perihan Teyze'nin evinden cik.",
+                "Tum esyalari sabitledin. Dis kapiya gidip Perihan Teyze'nin yanina don.",
                 "");
 
             AppendStepIfMissing(
                 "talk_to_ayse",
-                "Ayse Teyze ile konus ve siradaki ipucunu al.",
-                "Ayse Teyze sana yeni gorevi ve A harfini verecek.",
+                "Perihan Teyze ile konus ve siradaki ipucunu al.",
+                "Perihan Teyze sana yeni gorevi ve A harfini verecek.",
                 "A");
 
             AppendStepIfMissing(
@@ -99,8 +132,8 @@ namespace PatininIzinde.QuestSystem
 
             AppendStepIfMissing(
                 "talk_to_can",
-                "Evin onunde seni bekleyen Can'dan son gorevi al.",
-                "Arkadasin Can ile konus ve son guvenli toplanma gorevini ogren.",
+                "Evin onunde seni bekleyen Cem'den son gorevi al.",
+                "Arkadasin Cem ile konus ve son guvenli toplanma gorevini ogren.",
                 "D");
 
             AppendStepIfMissing(

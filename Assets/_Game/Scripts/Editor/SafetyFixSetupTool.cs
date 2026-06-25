@@ -9,13 +9,13 @@ namespace PatininIzinde.EditorTools
 {
     public static class SafetyFixSetupTool
     {
-        [MenuItem("Pati'nin Izinde/Kurulum/Secili Esyalari Ayse Teyze Sabitleme Gorevi Yap")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Secili Esyalari Perihan Teyze Sabitleme Gorevi Yap")]
         public static void SetupSelectedSafetyItems()
         {
             GameObject[] selectedObjects = Selection.gameObjects;
             if (selectedObjects == null || selectedObjects.Length == 0)
             {
-                EditorUtility.DisplayDialog("Secim yok", "Once Ayse Teyze'nin evinde sabitlenecek esyalari sec.", "Tamam");
+                EditorUtility.DisplayDialog("Secim yok", "Once Perihan Teyze'nin evinde sabitlenecek esyalari sec.", "Tamam");
                 return;
             }
 

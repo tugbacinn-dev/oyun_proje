@@ -38,7 +38,7 @@ namespace PatininIzinde.EditorTools
             EditorGUILayout.Space(12f);
             EditorGUILayout.LabelField("Mevcut Onayli Akis", EditorStyles.boldLabel);
             EditorGUILayout.TextArea(
-                "Anne -> Afet Cantasi -> Baba -> Ayse Teyze -> Deprem Ani -> Tahliye/112 -> AFAD Sifresi -> Pati",
+                "Anne -> Afet Cantasi -> Baba -> Perihan Teyze -> Deprem Ani -> Tahliye/112 -> AFAD Sifresi -> Pati",
                 GUILayout.MinHeight(46f));
 
             if (GUILayout.Button("Tasarim Dokumanini Sec"))
@@ -90,7 +90,7 @@ namespace PatininIzinde.EditorTools
             housePosition = EditorGUILayout.Vector3Field("Pozisyon", housePosition);
             houseRotation = EditorGUILayout.Vector3Field("Rotasyon", houseRotation);
             houseScale = EditorGUILayout.Vector3Field("Scale", houseScale);
-            ayseHouseOffset = EditorGUILayout.Vector3Field("Ayse Teyze Ev Offset", ayseHouseOffset);
+            ayseHouseOffset = EditorGUILayout.Vector3Field("Perihan Teyze Ev Offset", ayseHouseOffset);
 
             if (GUILayout.Button("Iki Dis Evi Kopyala"))
             {

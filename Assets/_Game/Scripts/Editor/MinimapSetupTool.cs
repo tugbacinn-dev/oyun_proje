@@ -38,10 +38,10 @@ namespace PatininIzinde.EditorTools
             SetSelectedPoint("homePoint", "Bizim ev noktasi");
         }
 
-        [MenuItem("Pati'nin Izinde/Kurulum/Secili Objeyi Mini Haritada Ayse Teyze Evi Yap")]
+        [MenuItem("Pati'nin Izinde/Kurulum/Secili Objeyi Mini Haritada Perihan Teyze Evi Yap")]
         public static void SetSelectedAsAysePoint()
         {
-            SetSelectedPoint("ayseHousePoint", "Ayse Teyze evi noktasi");
+            SetSelectedPoint("ayseHousePoint", "Perihan Teyze evi noktasi");
         }
 
         [MenuItem("Pati'nin Izinde/Kurulum/Secili Objeyi Mini Haritada Guvenli Toplanma Alani Yap")]

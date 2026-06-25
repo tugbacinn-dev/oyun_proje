@@ -18,6 +18,7 @@ namespace PatininIzinde.UI
         private const float ImageReferenceHeight = 576f;
 
         private bool isVisible;
+        private bool isInfoVisible;
         private float startTime;
         private float buttonHoverAmount;
         private Texture2D activeIntroImage;
@@ -32,6 +33,8 @@ namespace PatininIzinde.UI
         private GUIStyle buttonStyle;
         private GUIStyle buttonHoverStyle;
         private GUIStyle buttonLabelStyle;
+        private GUIStyle infoTitleStyle;
+        private GUIStyle infoBodyStyle;
         private GUIStyle passwordBoxStyle;
         private GUIStyle passwordIndexStyle;
         private Texture2D pixelTexture;
@@ -70,25 +73,38 @@ namespace PatininIzinde.UI
 
         private void Update()
         {
-            if (!isVisible)
+            if (!isVisible && !isInfoVisible)
             {
                 return;
             }
 
             if (Input.GetKeyDown(continueKey) || Input.GetKeyDown(KeyCode.Return))
             {
-                Hide();
+                if (isVisible)
+                {
+                    ShowInfoScreen();
+                }
+                else
+                {
+                    Hide();
+                }
             }
         }
 
         private void OnGUI()
         {
-            if (!isVisible)
+            if (!isVisible && !isInfoVisible)
             {
                 return;
             }
 
             EnsureStyles();
+
+            if (isInfoVisible)
+            {
+                DrawInfoScreen();
+                return;
+            }
 
             activeIntroImage = customIntroImage != null
                 ? customIntroImage
@@ -139,7 +155,7 @@ namespace PatininIzinde.UI
 
             if (GUI.Button(startRect, GUIContent.none, GUIStyle.none))
             {
-                Hide();
+                ShowInfoScreen();
             }
         }
 
@@ -181,9 +197,9 @@ namespace PatininIzinde.UI
             GUI.DrawTexture(R(offset, scale, 148f, 100f, 22f, 22f), pawTexture);
             GUI.Label(R(offset, scale, 184f, 96f, 330f, 32f), "DEPREM GUVENLIGI MACERASI", chipStyle);
 
-            GUI.Label(R(offset, scale, 122f, 165f, 440f, 108f), "Patinin", titleStyle);
+            GUI.Label(R(offset, scale, 122f, 165f, 440f, 108f), "Tacinin", titleStyle);
             GUI.Label(R(offset, scale, 123f, 268f, 390f, 110f), "izinde", titleAccentStyle);
-            GUI.Label(R(offset, scale, 122f, 402f, 500f, 76f), "Pati kayboldu. 4 gorevi tamamla, gizli harfleri\ntopla ve onu geri getir!", labelStyle);
+            GUI.Label(R(offset, scale, 122f, 402f, 500f, 76f), "Taci kayboldu. 4 gorevi tamamla, gizli harfleri\ntopla ve onu geri getir!", labelStyle);
 
             GUI.Label(R(offset, scale, 122f, 510f, 74f, 30f), "SIFREN:", smallStyle);
             for (int i = 0; i < 4; i++)
@@ -209,7 +225,7 @@ namespace PatininIzinde.UI
 
             if (GUI.Button(animatedRect, GUIContent.none, GUIStyle.none))
             {
-                Hide();
+                ShowInfoScreen();
             }
 
             GUI.DrawTexture(new Rect(animatedRect.x + 60f * scale, animatedRect.y + 27f * scale, 26f * scale, 26f * scale), pawTexture);
@@ -227,7 +243,7 @@ namespace PatininIzinde.UI
             DrawMissionRow(offset, scale, 431f, "Deprem Oncesinde", "Hazirlik ve canta", "1", new Color(1f, 0.38f, 0.2f), "!");
             DrawMissionRow(offset, scale, 513f, "Deprem Aninda", "Yer al, korun, tutun", "2", new Color(0.2f, 0.73f, 0.87f), "H");
             DrawMissionRow(offset, scale, 596f, "Deprem Sonrasinda", "Toplanma alani, yardim", "3", new Color(0.65f, 0.32f, 0.88f), "+");
-            DrawMissionRow(offset, scale, 678f, "Sifreyi Gir", "4 harfi birlestir, Pati gelsin!", "4", new Color(1f, 0.67f, 0.22f), "?");
+            DrawMissionRow(offset, scale, 678f, "Sifreyi Gir", "4 harfi birlestir, Taci gelsin!", "4", new Color(1f, 0.67f, 0.22f), "?");
         }
 
         private void DrawMissionRow(Vector2 offset, float scale, float y, string title, string subtitle, string number, Color iconColor, string icon)
@@ -266,7 +282,7 @@ namespace PatininIzinde.UI
             DrawCircle(baseOffset + new Vector2(31f, 137f) * scale, 7f * scale, new Color(1f, 0.36f, 0.32f));
 
             DrawRect(new Rect(baseOffset.x + 100f * scale, baseOffset.y + 145f * scale, 68f * scale, 34f * scale), new Color(1f, 0.36f, 0.2f));
-            GUI.Label(new Rect(baseOffset.x + 112f * scale, baseOffset.y + 150f * scale, 55f * scale, 24f * scale), "PATI", missionNumberStyle);
+            GUI.Label(new Rect(baseOffset.x + 112f * scale, baseOffset.y + 150f * scale, 55f * scale, 24f * scale), "TACI", missionNumberStyle);
 
             float tailSwing = Mathf.Sin(time * 2.1f) * 8f * scale;
             DrawRect(new Rect(baseOffset.x + (291f * scale), baseOffset.y + (26f * scale) + tailSwing, 18f * scale, 110f * scale), new Color(0.92f, 0.65f, 0.27f));
@@ -316,6 +332,7 @@ namespace PatininIzinde.UI
         private void Show()
         {
             isVisible = true;
+            isInfoVisible = false;
             IsIntroVisible = true;
             HasAdventureStarted = false;
             startTime = Time.unscaledTime;
@@ -324,14 +341,53 @@ namespace PatininIzinde.UI
             Cursor.visible = true;
         }
 
+        private void ShowInfoScreen()
+        {
+            isVisible = false;
+            isInfoVisible = true;
+            IsIntroVisible = true;
+            HasAdventureStarted = false;
+            SetPlayerInputEnabled(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         private void Hide()
         {
             isVisible = false;
+            isInfoVisible = false;
             IsIntroVisible = false;
             HasAdventureStarted = true;
             SetPlayerInputEnabled(true);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+
+        private void DrawInfoScreen()
+        {
+            DrawRect(new Rect(0f, 0f, Screen.width, Screen.height), new Color(0.03f, 0.05f, 0.07f, 0.94f));
+
+            float width = Mathf.Min(760f, Screen.width - 80f);
+            float height = Mathf.Min(420f, Screen.height - 80f);
+            Rect panel = new Rect((Screen.width - width) * 0.5f, (Screen.height - height) * 0.5f, width, height);
+
+            DrawSoftRect(new Rect(panel.x, panel.y + 10f, panel.width, panel.height), new Color(0f, 0f, 0f, 0.28f));
+            DrawSoftRect(panel, new Color(0.98f, 0.94f, 0.84f, 0.98f));
+            DrawRect(new Rect(panel.x, panel.y, panel.width, 18f), new Color(1f, 0.44f, 0.18f, 1f));
+
+            GUI.Label(new Rect(panel.x + 48f, panel.y + 44f, panel.width - 96f, 58f), "Oyunun Amaci", infoTitleStyle);
+            GUI.Label(
+                new Rect(panel.x + 64f, panel.y + 126f, panel.width - 128f, 150f),
+                "Taci kayboldu. Onu bulmak icin ipucu harfleri topla, deprem oncesi ve sonrasi gorevleri tamamla, guvenli alana ulas ve sifreyi coz.",
+                infoBodyStyle);
+
+            Rect buttonRect = new Rect(panel.x + 220f, panel.y + panel.height - 86f, panel.width - 440f, 52f);
+            if (GUI.Button(buttonRect, "DEVAM", buttonStyle))
+            {
+                Hide();
+            }
+
+            GUI.Label(new Rect(panel.x + 58f, panel.y + panel.height - 32f, panel.width - 116f, 24f), "Devam etmek icin Enter veya Space tusuna bas", smallStyle);
         }
 
         private void SetPlayerInputEnabled(bool enabled)
@@ -477,6 +533,24 @@ namespace PatininIzinde.UI
                 fontStyle = FontStyle.Bold,
                 alignment = TextAnchor.MiddleLeft,
                 normal = { textColor = Color.white }
+            };
+
+            infoTitleStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 34,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = new Color(0.1f, 0.22f, 0.34f) },
+                wordWrap = true
+            };
+
+            infoBodyStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 22,
+                fontStyle = FontStyle.Bold,
+                alignment = TextAnchor.MiddleCenter,
+                normal = { textColor = new Color(0.18f, 0.16f, 0.12f) },
+                wordWrap = true
             };
 
             missionTitleStyle = new GUIStyle(GUI.skin.label)

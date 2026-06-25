@@ -857,6 +857,8 @@ MonoBehaviour:
   safetyFixManager: {fileID: 1120621413}
   itemDisplayName: sehpa2
   interactionText: E ile sabitle
+  fixSound: {fileID: 0}
+  fixSoundVolume: 0.85
 --- !u!1001 &28846898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3126,16 +3128,24 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4804305644941582, guid: 38fb7ded0e1057f438e082c5f655bd53, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.36220652
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804305644941582, guid: 38fb7ded0e1057f438e082c5f655bd53, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.43501112
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804305644941582, guid: 38fb7ded0e1057f438e082c5f655bd53, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 399.146
+      value: 402.183
       objectReference: {fileID: 0}
     - target: {fileID: 4804305644941582, guid: 38fb7ded0e1057f438e082c5f655bd53, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.461
+      value: -0.148
       objectReference: {fileID: 0}
     - target: {fileID: 4804305644941582, guid: 38fb7ded0e1057f438e082c5f655bd53, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.765
+      value: 5.62
       objectReference: {fileID: 0}
     - target: {fileID: 4804305644941582, guid: 38fb7ded0e1057f438e082c5f655bd53, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7990,6 +8000,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: kibrit
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &296191177
@@ -8080,8 +8091,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4130326413330252, guid: b741fa043c0908c499bb320804aa111b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.42411256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130326413330252, guid: b741fa043c0908c499bb320804aa111b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.29033127
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130326413330252, guid: b741fa043c0908c499bb320804aa111b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 401.867
+      value: 401.648
       objectReference: {fileID: 0}
     - target: {fileID: 4130326413330252, guid: b741fa043c0908c499bb320804aa111b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9599,6 +9618,14 @@ PrefabInstance:
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4324656305083016010, guid: 40e9372ab1160574aaaa6f7a95acaba4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5148
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324656305083016010, guid: 40e9372ab1160574aaaa6f7a95acaba4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.506
+      objectReference: {fileID: 0}
+    - target: {fileID: 4324656305083016010, guid: 40e9372ab1160574aaaa6f7a95acaba4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 395.108
       objectReference: {fileID: 0}
@@ -9608,7 +9635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4324656305083016010, guid: 40e9372ab1160574aaaa6f7a95acaba4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.367
+      value: 5.337
       objectReference: {fileID: 0}
     - target: {fileID: 4324656305083016010, guid: 40e9372ab1160574aaaa6f7a95acaba4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11097,7 +11124,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4451847492441428313, guid: 0d1ac09e7b5f4de469d9633c60d21f03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.529486
+      value: 50.28
       objectReference: {fileID: 0}
     - target: {fileID: 4451847492441428313, guid: 0d1ac09e7b5f4de469d9633c60d21f03, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11105,7 +11132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4451847492441428313, guid: 0d1ac09e7b5f4de469d9633c60d21f03, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 42.199997
+      value: 52.1
       objectReference: {fileID: 0}
     - target: {fileID: 4451847492441428313, guid: 0d1ac09e7b5f4de469d9633c60d21f03, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13474,15 +13501,15 @@ MonoBehaviour:
   requiredStepId: talk_to_father
   interactionText: E ile babanla konus
   noteTitle: Babanin Notu
-  noteBody: 'Aferin kizim, afet cantani hazirlamayi ogrendin.
+  noteBody: 'Aferin kizim Cilek, afet cantani hazirlamayi ogrendin.
 
 
-    Ikinci ipucu
-    harfin F. Aman diyeyim, harfleri unutma.
+    Ikinci
+    ipucu harfin F. Aman diyeyim, harfleri unutma.
 
 
     Simdi ucuncu gorevin geliyor:
-    Ayse Teyze''nin evine git ve sabitlenmesi gereken esyalari sabitle.'
+    Perihan Teyze''nin evine git ve sabitlenmesi gereken esyalari sabitle.'
   completeStepAfterReading: 1
 --- !u!136 &535134810
 CapsuleCollider:
@@ -14838,15 +14865,15 @@ MonoBehaviour:
   requiredStepId: talk_to_mother
   interactionText: E ile annenle konus
   noteTitle: Annenin Notu
-  noteBody: 'Kizim, Pati''yi bulman icin ilk ipucu harfin A.
+  noteBody: 'Kizim Cilek, Taci''yi bulman icin ilk ipucu harfin A.
 
 
-    Bu harfleri aklinda
-    tut; gorevler bittiginde isine yarayacak.
+    Bu harfleri
+    aklinda tut; gorevler bittiginde isine yarayacak.
 
 
-    Simdi afet gorevlerinin ilkini
-    veriyorum: deprem cantani hazirla.'
+    Simdi afet gorevlerinin
+    ilkini veriyorum: deprem cantani hazirla.'
   completeStepAfterReading: 1
 --- !u!1001 &565180736
 PrefabInstance:
@@ -16284,6 +16311,230 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8837671033713723555, guid: a959dbb7b69ddcc47a11a936f54eb5d5, type: 3}
   m_PrefabInstance: {fileID: 615461239}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &617282269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617282273}
+  - component: {fileID: 617282272}
+  - component: {fileID: 617282271}
+  - component: {fileID: 617282270}
+  m_Layer: 0
+  m_Name: Cube (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &617282270
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617282269}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &617282271
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617282269}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &617282272
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617282269}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &617282273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617282269}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 391.56, y: -1.64, z: 7.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &621540091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 621540095}
+  - component: {fileID: 621540094}
+  - component: {fileID: 621540093}
+  - component: {fileID: 621540092}
+  m_Layer: 0
+  m_Name: Cube (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &621540092
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621540091}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &621540093
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621540091}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &621540094
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621540091}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &621540095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621540091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 394.913, y: -1.64, z: 7.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &624599788 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3996640922606227055, guid: 26beec14bf6f10b43b1da5751fa75bb7, type: 3}
@@ -16763,6 +17014,10 @@ MonoBehaviour:
   notePanel: {fileID: 2067862100}
   noteTitleText: {fileID: 1708286034}
   noteBodyText: {fileID: 1786315059}
+  endingScreenTexture: {fileID: 2800000, guid: d1c56767a6b9fba48ba1a3a269424246, type: 3}
+  endingScreenSound: {fileID: 0}
+  gameMusic: {fileID: 0}
+  gameMusicVolume: 0.35
 --- !u!114 &636695003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17251,6 +17506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: pil
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &651361521
@@ -17636,11 +17892,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 869160301232739839, guid: 6d0b9ee302949eb4584a96c62493a59d, type: 3}
   m_PrefabInstance: {fileID: 689687524}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &693488577 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9040392414484005471, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-  m_PrefabInstance: {fileID: 895648939}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &696623830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17885,6 +18136,118 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6506390497821282259, guid: d402b49657e65054eb7bcc8e29331d00, type: 3}
   m_PrefabInstance: {fileID: 702744849}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &707654584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 707654588}
+  - component: {fileID: 707654587}
+  - component: {fileID: 707654586}
+  - component: {fileID: 707654585}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &707654585
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707654584}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &707654586
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707654584}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &707654587
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707654584}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &707654588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707654584}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 387.2424, y: -1.64, z: 7.81}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &708912635
 GameObject:
   m_ObjectHideFlags: 0
@@ -18554,7 +18917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdf45de85a6f03498b22d143aad7ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.Interaction.TeleportDoor
-  interactionText: E ile Ayse Teyze'nin evine gir
+  interactionText: E ile Perihan Teyze'nin evine gir
   targetPoint: {fileID: 1798261316}
   questManager: {fileID: 845480235}
   requiredStepId: go_to_ayse
@@ -20635,6 +20998,8 @@ MonoBehaviour:
   safetyFixManager: {fileID: 1120621413}
   itemDisplayName: tablo1
   interactionText: E ile sabitle
+  fixSound: {fileID: 0}
+  fixSoundVolume: 0.85
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -21188,8 +21553,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.QuestManager
   steps:
   - StepId: talk_to_mother
-    Title: Pati'yi bulmak icin annenle konus.
-    Description: Annen Pati'nin bir not biraktigini biliyor olabilir.
+    Title: Taci'yi bulmak icin annenle konus.
+    Description: Annen Taci'nin bir not biraktigini biliyor olabilir.
     RewardLetter: A
   - StepId: prepare_bag
     Title: Afet cantani hazirla.
@@ -21200,10 +21565,12 @@ MonoBehaviour:
     Description: Afet cantasini tamamladin. Simdi babandan siradaki notu al.
     RewardLetter: F
   - StepId: go_to_ayse
-    Title: Gri basamaklari takip ederek Ayse Teyze'nin evine git.
-    Description: Ayse Teyze'nin evindeki riskli esyalari guvenli hale getir.
+    Title: Gri basamaklari takip ederek Perihan Teyze'nin evine git.
+    Description: Perihan Teyze'nin evindeki riskli esyalari guvenli hale getir.
     RewardLetter: 
   currentStepIndex: 0
+  questCompleteSound: {fileID: 0}
+  questCompleteSoundVolume: 0.85
 --- !u!4 &845480236
 Transform:
   m_ObjectHideFlags: 0
@@ -21280,11 +21647,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26beec14bf6f10b43b1da5751fa75bb7, type: 3}
---- !u!1 &851709934 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9040392414484005471, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-  m_PrefabInstance: {fileID: 1131586625}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &853455216 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8837671033713723555, guid: a959dbb7b69ddcc47a11a936f54eb5d5, type: 3}
@@ -22258,90 +22620,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3931811592138344042, guid: ef337f5cf40006b49a2e4264022f608a, type: 3}
   m_PrefabInstance: {fileID: 893905764}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &895648939
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1021594335}
-    m_Modifications:
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -11.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.6890001
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.9996237
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.027431494
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 356.856
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9040392414484005471, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_Name
-      value: tablo5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9040392414484005471, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 895648941}
-  m_SourcePrefab: {fileID: 100100000, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
---- !u!4 &895648940 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-  m_PrefabInstance: {fileID: 895648939}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &895648941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 693488577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dabcd81b836ee9498e8615609131aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.SafetyFixItem
-  safetyFixManager: {fileID: 1120621413}
-  itemDisplayName: tablo5
-  interactionText: E ile sabitle
 --- !u!1 &901973873
 GameObject:
   m_ObjectHideFlags: 0
@@ -22471,12 +22749,24 @@ PrefabInstance:
       value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4444737114404570589, guid: abe16233ef9d0af4ba4dbccd5a19f0de, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.9977
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444737114404570589, guid: abe16233ef9d0af4ba4dbccd5a19f0de, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.337
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444737114404570589, guid: abe16233ef9d0af4ba4dbccd5a19f0de, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 55.029488
+      value: 53.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444737114404570589, guid: abe16233ef9d0af4ba4dbccd5a19f0de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.39
       objectReference: {fileID: 0}
     - target: {fileID: 4444737114404570589, guid: abe16233ef9d0af4ba4dbccd5a19f0de, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 52.949997
+      value: 52.95
       objectReference: {fileID: 0}
     - target: {fileID: 4444737114404570589, guid: abe16233ef9d0af4ba4dbccd5a19f0de, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25004,8 +25294,6 @@ Transform:
   - {fileID: 1700029805}
   - {fileID: 1025464693}
   - {fileID: 830407953}
-  - {fileID: 1131586626}
-  - {fileID: 895648940}
   - {fileID: 1957116400}
   - {fileID: 1704439956}
   - {fileID: 1385942766}
@@ -27619,90 +27907,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6817814863365463315, guid: 30f337b08ab1d9244b177ca488cc1d99, type: 3}
   m_PrefabInstance: {fileID: 1129520427}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1131586625
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1021594335}
-    m_Modifications:
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_RootOrder
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -11.194
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.6890001
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.777
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.9996237
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.027431494
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 356.856
-      objectReference: {fileID: 0}
-    - target: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9040392414484005471, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      propertyPath: m_Name
-      value: tablo4
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9040392414484005471, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1131586627}
-  m_SourcePrefab: {fileID: 100100000, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
---- !u!4 &1131586626 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 679494908773252736, guid: 6f6acf33e8bea6b43b6406d8ea9a1222, type: 3}
-  m_PrefabInstance: {fileID: 1131586625}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1131586627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 851709934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1dabcd81b836ee9498e8615609131aef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.SafetyFixItem
-  safetyFixManager: {fileID: 1120621413}
-  itemDisplayName: tablo4
-  interactionText: E ile sabitle
 --- !u!1001 &1132358539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28935,6 +29139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: pusula
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &1175682206
@@ -29778,6 +29983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: fener
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &1206356095
@@ -31042,6 +31248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: konserve
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &1254276630
@@ -31122,6 +31329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: telsiz
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &1265966339
@@ -32850,6 +33058,8 @@ MonoBehaviour:
   safetyFixManager: {fileID: 1120621413}
   itemDisplayName: sehpa
   interactionText: E ile sabitle
+  fixSound: {fileID: 0}
+  fixSoundVolume: 0.85
 --- !u!1001 &1325185340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -34354,6 +34564,8 @@ MonoBehaviour:
   safetyFixManager: {fileID: 1120621413}
   itemDisplayName: 'TV '
   interactionText: E ile sabitle
+  fixSound: {fileID: 0}
+  fixSoundVolume: 0.85
 --- !u!1 &1386532928
 GameObject:
   m_ObjectHideFlags: 0
@@ -35412,6 +35624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: su
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &1411464135
@@ -35944,7 +36157,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6702635459858530726, guid: ad8c2e4e0b206614abbcc03a38753ca9, type: 3}
       propertyPath: m_Name
-      value: SM_CartoonAnimal_Dog
+      value: taci
       objectReference: {fileID: 0}
     - target: {fileID: 8390036377455268811, guid: ad8c2e4e0b206614abbcc03a38753ca9, type: 3}
       propertyPath: m_RootOrder
@@ -35952,7 +36165,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8390036377455268811, guid: ad8c2e4e0b206614abbcc03a38753ca9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.69
+      value: 53.82
       objectReference: {fileID: 0}
     - target: {fileID: 8390036377455268811, guid: ad8c2e4e0b206614abbcc03a38753ca9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35960,7 +36173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8390036377455268811, guid: ad8c2e4e0b206614abbcc03a38753ca9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 49.59
+      value: 52.73
       objectReference: {fileID: 0}
     - target: {fileID: 8390036377455268811, guid: ad8c2e4e0b206614abbcc03a38753ca9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -37793,7 +38006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdf45de85a6f03498b22d143aad7ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.Interaction.TeleportDoor
-  interactionText: E ile Ayse Teyze'nin evine gir
+  interactionText: E ile Perihan Teyze'nin evine gir
   targetPoint: {fileID: 1798261316}
   questManager: {fileID: 845480235}
   requiredStepId: go_to_ayse
@@ -42052,6 +42265,8 @@ MonoBehaviour:
   safetyFixManager: {fileID: 1120621413}
   itemDisplayName: "tv \xFCnitesi"
   interactionText: E ile sabitle
+  fixSound: {fileID: 0}
+  fixSoundVolume: 0.85
 --- !u!1 &1638603198
 GameObject:
   m_ObjectHideFlags: 0
@@ -43106,6 +43321,118 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690160377}
   m_Mesh: {fileID: -7416995089712184856, guid: 10421bb48808b2d46a7a945058e32549, type: 3}
+--- !u!1 &1696178153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1696178157}
+  - component: {fileID: 1696178156}
+  - component: {fileID: 1696178155}
+  - component: {fileID: 1696178154}
+  m_Layer: 0
+  m_Name: Cube (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1696178154
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696178153}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1696178155
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696178153}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1696178156
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696178153}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1696178157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696178153}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 397.49, y: -1.64, z: 7.73}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1697113863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43520,6 +43847,8 @@ MonoBehaviour:
   safetyFixManager: {fileID: 1120621413}
   itemDisplayName: tablo3
   interactionText: E ile sabitle
+  fixSound: {fileID: 0}
+  fixSoundVolume: 0.85
 --- !u!1001 &1704600039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44027,6 +44356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: ilkyardim
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &1725612898
@@ -46591,7 +46921,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Pati'yi bulmak icin annenle konus.
+  m_Text: Taci'yi bulmak icin annenle konus.
 --- !u!222 &1821502061
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -47423,6 +47753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: konserve balik
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &1875376751
@@ -49202,6 +49533,8 @@ MonoBehaviour:
   safetyFixManager: {fileID: 1120621413}
   itemDisplayName: tablo2
   interactionText: E ile sabitle
+  fixSound: {fileID: 0}
+  fixSoundVolume: 0.85
 --- !u!1 &1957533335
 GameObject:
   m_ObjectHideFlags: 0
@@ -49391,7 +49724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.UI.IntroScreenController
   showOnStart: 1
   continueKey: 57
-  customIntroImage: {fileID: 2800000, guid: fd0ecd359dbc6044ca93e6b877803720, type: 3}
+  customIntroImage: {fileID: 2800000, guid: 5cef86b5276011a48a7ca67f80d7116e, type: 3}
   playerController: {fileID: 1406734098}
   playerInteractor: {fileID: 1406734097}
 --- !u!4 &1968101040
@@ -50258,8 +50591,8 @@ MonoBehaviour:
   questManager: {fileID: 845480235}
   uiController: {fileID: 636695002}
   requiredStepId: talk_to_ayse
-  interactionText: E ile Ayse Teyze ile konus
-  noteTitle: Ayse Teyze'nin Notu
+  interactionText: E ile Perihan Teyze ile konus
+  noteTitle: Perihan Teyze'nin Notu
   noteBody: 'Kuzum, yardim ettigin icin cok tesekkur ederim.
 
 
@@ -50920,6 +51253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatininIzinde.QuestSystem.BagCollectibleItem
   bagManager: {fileID: 1004971260}
   itemDisplayName: hap
+  itemPurpose: 
   interactionText: E ile al
   hideWhenCollected: 1
 --- !u!65 &2036876988
@@ -52629,16 +52963,24 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4582117764247738, guid: baa8d2066558c9a4ebcd1853c4c3ac4e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5209568
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582117764247738, guid: baa8d2066558c9a4ebcd1853c4c3ac4e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.41819867
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582117764247738, guid: baa8d2066558c9a4ebcd1853c4c3ac4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 395.388
+      value: 397.381
       objectReference: {fileID: 0}
     - target: {fileID: 4582117764247738, guid: baa8d2066558c9a4ebcd1853c4c3ac4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.026
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4582117764247738, guid: baa8d2066558c9a4ebcd1853c4c3ac4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.423
+      value: 5.726
       objectReference: {fileID: 0}
     - target: {fileID: 4582117764247738, guid: baa8d2066558c9a4ebcd1853c4c3ac4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -54193,3 +54535,7 @@ SceneRoots:
   - {fileID: 1040517661}
   - {fileID: 1614955788}
   - {fileID: 9163351}
+  - {fileID: 707654588}
+  - {fileID: 617282273}
+  - {fileID: 621540095}
+  - {fileID: 1696178157}
