@@ -1,4 +1,3 @@
-using System.Collections;
 using PatininIzinde.Interaction;
 using PatininIzinde.QuestSystem;
 using PatininIzinde.Characters;
@@ -43,11 +42,13 @@ namespace PatininIzinde.UI
         private bool isPasswordPromptVisible;
         private FirstPersonCameraController playerController;
         private GameObject finalDog;
-        private Coroutine finalDogRunRoutine;
+        private bool finalDogRevealed;
         private bool hasFinalDogInitialTransform;
         private Vector3 finalDogInitialPosition;
         private Quaternion finalDogInitialRotation;
         private Vector3 finalDogInitialScale;
+        private const float FinalDogAutoRevealDelay = 180f;
+        private static readonly Vector3 finalDogFallbackPosition = new Vector3(54.69f, -0.02f, 49.59f);
         private GameObject questTextRoot;
         private GameObject interactionTextRoot;
         private GUIStyle questBoxStyle;
@@ -83,7 +84,7 @@ namespace PatininIzinde.UI
 
             playerController = FindFirstObjectByType<FirstPersonCameraController>();
             ResolveFinalDog();
-            SetFinalDogVisible(true);
+            SetFinalDogVisible(false);
 
             if (bagCollectionManager == null)
             {
@@ -131,7 +132,7 @@ namespace PatininIzinde.UI
         private void Start()
         {
             ResolveFinalDog();
-            SetFinalDogVisible(true);
+            SetFinalDogVisible(false);
             EnsureAyseDirectionArrows();
 
             gameplayHudVisible = !ShouldShowGameplayHud();
@@ -155,10 +156,11 @@ namespace PatininIzinde.UI
             UpdateInteractionText();
             UpdateEarthquakeFeedback();
             UpdateGameplayHudVisibility();
+            UpdateFinalDogAutoReveal();
 
             if (isPasswordPromptVisible)
             {
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
                 {
                     SubmitPasswordPrompt();
                 }
@@ -172,6 +174,21 @@ namespace PatininIzinde.UI
             if (notePanel != null && notePanel.activeSelf && Input.GetKeyDown(KeyCode.Space))
             {
                 HideNote();
+            }
+        }
+
+        private void UpdateFinalDogAutoReveal()
+        {
+            if (finalDogRevealed || Time.timeSinceLevelLoad < FinalDogAutoRevealDelay)
+            {
+                return;
+            }
+
+            RevealFinalDog();
+            currentQuestTitle = "Pati ortaya cikti! Etrafina bak.";
+            if (questText != null)
+            {
+                questText.text = currentQuestTitle;
             }
         }
 
@@ -676,9 +693,12 @@ namespace PatininIzinde.UI
             string normalized = passwordInput.Trim().ToUpperInvariant();
             if (normalized == "AFAD")
             {
-                passwordFeedback = "Sifre dogru! Pati cok yakinda.";
+                passwordFeedback = "Sifre dogru! Pati geldi.";
                 HidePasswordPrompt();
                 RevealFinalDog();
+                ShowNote(
+                    "AFAD Bilgisi",
+                    "AFAD, afet ve acil durumlarda arama kurtarma, yardim ve koordinasyon calismalarini yurutur.\n\nEtrafina iyice bak, Pati geldi buralarda.");
                 return;
             }
 
@@ -700,10 +720,11 @@ namespace PatininIzinde.UI
                     continue;
                 }
 
-                if (candidate.name == "SM_CartoonAnimal_Dog" && candidate.transform.parent == null)
+                if (IsFinalDogCandidate(candidate) && candidate.transform.parent == null)
                 {
                     finalDog = candidate;
                     CacheFinalDogInitialTransform();
+                    Debug.Log($"Pati bulundu: {finalDog.name}");
                     return;
                 }
             }
@@ -715,13 +736,41 @@ namespace PatininIzinde.UI
                     continue;
                 }
 
-                if (candidate.name == "SM_CartoonAnimal_Dog")
+                if (IsFinalDogCandidate(candidate))
                 {
                     finalDog = candidate.transform.root.gameObject;
                     CacheFinalDogInitialTransform();
+                    Debug.Log($"Pati bulundu: {finalDog.name}");
                     return;
                 }
             }
+        }
+
+        private static bool IsFinalDogCandidate(GameObject candidate)
+        {
+            if (candidate == null)
+            {
+                return false;
+            }
+
+            string candidateName = candidate.name.ToLowerInvariant();
+            if (candidateName == "pati" ||
+                candidateName.Contains("pati") ||
+                candidateName.Contains("cartoonanimal_dog") ||
+                candidateName.Contains("dog"))
+            {
+                return true;
+            }
+
+            Animator animator = candidate.GetComponentInChildren<Animator>(true);
+            if (animator != null &&
+                animator.runtimeAnimatorController != null &&
+                animator.runtimeAnimatorController.name.ToLowerInvariant().Contains("cartoonanimal_dog"))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void CacheFinalDogInitialTransform()
@@ -731,7 +780,7 @@ namespace PatininIzinde.UI
                 return;
             }
 
-            finalDogInitialPosition = finalDog.transform.position;
+            finalDogInitialPosition = finalDogFallbackPosition;
             finalDogInitialRotation = finalDog.transform.rotation;
             finalDogInitialScale = finalDog.transform.localScale;
             hasFinalDogInitialTransform = true;
@@ -761,95 +810,207 @@ namespace PatininIzinde.UI
                 }
             }
 
-            finalDog.SetActive(visible);
+            finalDog.SetActive(true);
+
+            Renderer[] renderers = finalDog.GetComponentsInChildren<Renderer>(true);
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.enabled = visible;
+            }
+
+            Collider[] colliders = finalDog.GetComponentsInChildren<Collider>(true);
+            foreach (Collider dogCollider in colliders)
+            {
+                dogCollider.enabled = visible;
+            }
         }
 
         private void RevealFinalDog()
         {
+            finalDogRevealed = true;
             SetFinalDogVisible(true);
             if (finalDog == null)
             {
-                currentQuestTitle = "Sifre dogru! Pati modeli sahnede bulunamadi.";
-                if (questText != null)
-                {
-                    questText.text = currentQuestTitle;
-                }
-
-                return;
+                finalDog = CreateEmergencyPati();
+                hasFinalDogInitialTransform = true;
+                finalDogInitialScale = finalDog.transform.localScale;
             }
 
-            Vector3 targetPosition = ResolveFinalDogTargetPosition();
-            if (finalDogRunRoutine != null)
-            {
-                StopCoroutine(finalDogRunRoutine);
-            }
+            Vector3 revealPosition = GetFinalDogRevealPosition();
+            Quaternion revealRotation = GetFinalDogRevealRotation(revealPosition);
+            finalDog.transform.SetPositionAndRotation(revealPosition, revealRotation);
+            finalDog.transform.localScale = Vector3.one * 3f;
+            ForceFinalDogVisible();
+            EnsurePatiMarker();
 
-            finalDogRunRoutine = StartCoroutine(RunFinalDogToTarget(targetPosition));
-            currentQuestTitle = "Sifre dogru! Pati bulundu.";
-            if (questText != null)
-            {
-                questText.text = currentQuestTitle;
-            }
-        }
-
-        private Vector3 ResolveFinalDogTargetPosition()
-        {
-            float dogY = finalDog != null ? finalDog.transform.position.y : 0f;
-            GameObject passwordNote = GameObject.Find("Pati_Sifre_Notu");
-            if (passwordNote != null)
-            {
-                Vector3 notePosition = passwordNote.transform.position;
-                return new Vector3(notePosition.x + 3.9f, dogY, notePosition.z + 0.2f);
-            }
-
-            GameObject umbrella = GameObject.Find("Env_Playground (1)");
-            if (umbrella != null)
-            {
-                Vector3 umbrellaPosition = umbrella.transform.position;
-                return new Vector3(umbrellaPosition.x + 3.9f, dogY, umbrellaPosition.z + 0.02f);
-            }
-
-            return new Vector3(54.69f, dogY, 45.97f);
-        }
-
-        private IEnumerator RunFinalDogToTarget(Vector3 targetPosition)
-        {
             Animator animator = finalDog.GetComponentInChildren<Animator>(true);
             if (animator != null)
             {
                 animator.enabled = true;
             }
 
-            const float runSpeed = 7f;
-            const float stopDistance = 0.08f;
+            Debug.Log($"AFAD dogru. Pati gorunur yapildi: {finalDog.name} / {finalDog.transform.position}");
 
-            while (finalDog != null)
+            currentQuestTitle = "Etrafina iyice bak, Pati geldi buralarda.";
+            if (questText != null)
             {
-                Vector3 currentPosition = finalDog.transform.position;
-                Vector3 flatDirection = targetPosition - currentPosition;
-                flatDirection.y = 0f;
+                questText.text = currentQuestTitle;
+            }
+        }
 
-                if (flatDirection.sqrMagnitude <= stopDistance * stopDistance)
-                {
-                    finalDog.transform.position = targetPosition;
-                    break;
-                }
-
-                if (flatDirection.sqrMagnitude > 0.001f)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(flatDirection.normalized, Vector3.up);
-                    finalDog.transform.rotation = Quaternion.Slerp(finalDog.transform.rotation, targetRotation, Time.deltaTime * 8f);
-                }
-
-                finalDog.transform.position = Vector3.MoveTowards(
-                    currentPosition,
-                    targetPosition,
-                    runSpeed * Time.deltaTime);
-
-                yield return null;
+        private Vector3 GetFinalDogRevealPosition()
+        {
+            Transform viewTransform = Camera.main != null ? Camera.main.transform : null;
+            if (viewTransform == null && playerController != null)
+            {
+                viewTransform = playerController.transform;
             }
 
-            finalDogRunRoutine = null;
+            if (viewTransform == null)
+            {
+                GameObject playground = GameObject.Find("Env_Playground (1)");
+                if (playground != null)
+                {
+                    Vector3 playgroundPosition = playground.transform.position + new Vector3(-1.8f, 0.05f, -0.9f);
+                    playgroundPosition.y = playground.transform.position.y + 0.05f;
+                    return playgroundPosition;
+                }
+
+                return finalDogFallbackPosition;
+            }
+
+            Vector3 forward = viewTransform.forward;
+            forward.y = 0f;
+            if (forward.sqrMagnitude < 0.001f)
+            {
+                forward = viewTransform.transform.forward;
+            }
+
+            forward.Normalize();
+            Vector3 position = viewTransform.position + forward * 3f;
+            position.y = viewTransform.position.y - 1.25f;
+
+            if (Physics.Raycast(position + Vector3.up * 3f, Vector3.down, out RaycastHit hit, 8f, ~0, QueryTriggerInteraction.Ignore))
+            {
+                position.y = hit.point.y;
+            }
+
+            return position;
+        }
+
+        private Quaternion GetFinalDogRevealRotation(Vector3 revealPosition)
+        {
+            Transform viewTransform = Camera.main != null ? Camera.main.transform : null;
+            Vector3 lookDirection = viewTransform != null ? viewTransform.position - revealPosition : Vector3.forward;
+            lookDirection.y = 0f;
+            if (lookDirection.sqrMagnitude < 0.001f)
+            {
+                lookDirection = Vector3.forward;
+            }
+
+            return Quaternion.LookRotation(lookDirection.normalized, Vector3.up);
+        }
+
+        private void EnsurePatiMarker()
+        {
+            if (finalDog == null)
+            {
+                return;
+            }
+
+            Transform existingMarker = finalDog.transform.Find("Pati_Gorunur_Etiket");
+            if (existingMarker != null)
+            {
+                existingMarker.localPosition = new Vector3(0f, 2.2f, 0f);
+                existingMarker.gameObject.SetActive(true);
+                return;
+            }
+
+            GameObject marker = new GameObject("Pati_Gorunur_Etiket");
+            marker.transform.SetParent(finalDog.transform, false);
+            marker.transform.localPosition = new Vector3(0f, 2.2f, 0f);
+            marker.transform.localRotation = Quaternion.Euler(70f, 0f, 0f);
+            marker.transform.localScale = Vector3.one * 0.22f;
+
+            TextMesh label = marker.AddComponent<TextMesh>();
+            label.text = "PATI BURADA";
+            label.fontSize = 64;
+            label.characterSize = 0.18f;
+            label.anchor = TextAnchor.MiddleCenter;
+            label.alignment = TextAlignment.Center;
+            label.color = new Color(1f, 0.05f, 0.02f);
+
+            MeshRenderer renderer = marker.GetComponent<MeshRenderer>();
+            if (renderer != null)
+            {
+                renderer.enabled = true;
+                renderer.forceRenderingOff = false;
+            }
+        }
+
+        private void ForceFinalDogVisible()
+        {
+            if (finalDog == null)
+            {
+                return;
+            }
+
+            Transform parent = finalDog.transform.parent;
+            while (parent != null)
+            {
+                parent.gameObject.SetActive(true);
+                parent = parent.parent;
+            }
+
+            finalDog.SetActive(true);
+
+            Renderer[] renderers = finalDog.GetComponentsInChildren<Renderer>(true);
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.enabled = true;
+                renderer.forceRenderingOff = false;
+            }
+
+            Collider[] colliders = finalDog.GetComponentsInChildren<Collider>(true);
+            foreach (Collider dogCollider in colliders)
+            {
+                dogCollider.enabled = true;
+            }
+        }
+
+        private static GameObject CreateEmergencyPati()
+        {
+            GameObject root = new GameObject("Pati");
+            GameObject body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            body.name = "Pati_Govde";
+            body.transform.SetParent(root.transform, false);
+            body.transform.localPosition = new Vector3(0f, 0.45f, 0f);
+            body.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+            body.transform.localScale = new Vector3(0.45f, 0.55f, 0.45f);
+
+            GameObject head = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            head.name = "Pati_Bas";
+            head.transform.SetParent(root.transform, false);
+            head.transform.localPosition = new Vector3(0f, 0.8f, 0.48f);
+            head.transform.localScale = new Vector3(0.42f, 0.36f, 0.36f);
+
+            GameObject tail = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            tail.name = "Pati_Kuyruk";
+            tail.transform.SetParent(root.transform, false);
+            tail.transform.localPosition = new Vector3(0f, 0.65f, -0.55f);
+            tail.transform.localRotation = Quaternion.Euler(55f, 0f, 0f);
+            tail.transform.localScale = new Vector3(0.1f, 0.35f, 0.1f);
+
+            Color patiColor = new Color(1f, 0.56f, 0.22f);
+            Renderer[] renderers = root.GetComponentsInChildren<Renderer>();
+            foreach (Renderer renderer in renderers)
+            {
+                renderer.material.color = patiColor;
+            }
+
+            root.transform.localScale = Vector3.one;
+            Debug.LogWarning("Sahnedeki kopek bulunamadi; gecici Pati olusturuldu.");
+            return root;
         }
 
         private void EnsureAyseDirectionArrows()
