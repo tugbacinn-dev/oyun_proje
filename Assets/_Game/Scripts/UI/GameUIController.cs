@@ -448,8 +448,8 @@ namespace PatininIzinde.UI
 
             if (!string.IsNullOrWhiteSpace(currentInteractionTitle))
             {
-                float width = 520f;
-                float height = 62f;
+                float width = Mathf.Min(900f, Screen.width - 80f);
+                float height = 70f;
                 Rect rect = new Rect((Screen.width - width) * 0.5f, Screen.height - 126f, width, height);
                 GUI.Box(rect, currentInteractionTitle, interactionBoxStyle);
             }

@@ -77,6 +77,7 @@ namespace PatininIzinde.EditorTools
             SerializedObject serializedItem = new SerializedObject(collectible);
             serializedItem.FindProperty("bagManager").objectReferenceValue = bagManager;
             serializedItem.FindProperty("itemDisplayName").stringValue = MakeNiceName(item.name);
+            serializedItem.FindProperty("itemPurpose").stringValue = MakePurpose(item.name);
             serializedItem.FindProperty("interactionText").stringValue = "E ile al";
             serializedItem.FindProperty("hideWhenCollected").boolValue = true;
             serializedItem.ApplyModifiedPropertiesWithoutUndo();
@@ -85,6 +86,62 @@ namespace PatininIzinde.EditorTools
         private static string MakeNiceName(string rawName)
         {
             return rawName.Replace("_", " ").Replace("-", " ");
+        }
+
+        private static string MakePurpose(string rawName)
+        {
+            string itemName = rawName.ToLowerInvariant();
+            if (itemName.Contains("pusula") || itemName.Contains("compass"))
+            {
+                return "yon bulmak icin";
+            }
+
+            if (itemName.Contains("hap") || itemName.Contains("pill"))
+            {
+                return "ilac ihtiyaci icin";
+            }
+
+            if (itemName.Contains("su") || itemName.Contains("water"))
+            {
+                return "susuz kalmamak icin";
+            }
+
+            if (itemName.Contains("canopen"))
+            {
+                return "konserve acmak icin";
+            }
+
+            if (itemName.Contains("konserve") || itemName.Contains("sardine") || itemName.Contains("canned"))
+            {
+                return "acil yiyecek";
+            }
+
+            if (itemName.Contains("fener") || itemName.Contains("flashlight"))
+            {
+                return "karanlikta gormek icin";
+            }
+
+            if (itemName.Contains("pil") || itemName.Contains("battery"))
+            {
+                return "cihazlara enerji";
+            }
+
+            if (itemName.Contains("ilk") || itemName.Contains("firstaid"))
+            {
+                return "yaralanmalara ilk yardim";
+            }
+
+            if (itemName.Contains("telsiz") || itemName.Contains("radio") || itemName.Contains("walkie"))
+            {
+                return "haber almak icin";
+            }
+
+            if (itemName.Contains("kibrit") || itemName.Contains("match"))
+            {
+                return "ates yakmak icin";
+            }
+
+            return "acil durumda lazim";
         }
     }
 }
